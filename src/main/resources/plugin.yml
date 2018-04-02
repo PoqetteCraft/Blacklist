@@ -1,0 +1,40 @@
+name: ${name}
+version: ${version}
+main: ${groupId}.${artifactId}.${name}Plugin
+description: ${description}
+author: ${author}
+commands:
+    blacklist:
+        description: Base command
+        usage: /<command> [add|remove|info|list] [playername|page]
+        aliases: [blist, blackl, bl, ban]
+        permission: blacklist.command
+permissions:
+    blacklist.command:
+        description: Base permission
+        default: true
+    blacklist.add:
+        description: Permission for /blacklist add <player>
+        default: op
+    blacklist.remove:
+        description: Permission for /blacklist remove <player>
+        default: op
+    blacklist.list:
+        description: Permission for /blacklist list [page]
+        default: true
+    blacklist.info:
+        description: Permission for /blacklist info <player>
+        default: true
+    blacklist.exempt:
+        description: Players with this permission cannot be added to the blacklist
+        default: op
+    blacklist.*:
+        description: Master permission
+        default: op
+        children:
+            blacklist.command: true
+            blacklist.add: true
+            blacklist.remove: true
+            blacklist.list: true
+            blacklist.info: true
+            blacklist.exempt: true
