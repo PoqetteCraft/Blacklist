@@ -15,6 +15,7 @@ public class BlacklistPlugin extends DatabasePlugin {
 	public void onEnable() {
 		saveDefaultConfig();
 		message = getConfig().getString("disallow-message");
+		size = getConfig().getInt("page-size");
 		Database.register(this);
 		manager = new BlacklistManager(this);
 		getCommand("blacklist").setExecutor(new BlacklistCommand(this));
