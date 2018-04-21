@@ -72,25 +72,25 @@ public class BlacklistCommand implements CommandExecutor {
 			} else if (args[0].equalsIgnoreCase("list")) {
 				if (sender.hasPermission("blacklist.list")) {
 					List<UUID> list = plugin.getBlacklistManager().all();
-					int size = list.size();
-					int max = plugin.getSize();
-					if (size == 0) {
+					int listSize = list.size();
+					int pageSize = plugin.getSize();
+					if (listSize == 0) {
 						sender.sendMessage(Messages.BLACKLIST_EMPTY);
-					} else if (size > max) {
-						int pages = size / max;
-						if ((size % max) != 0) {
-							pages++;
+					} else if (listSize > pageSize) {
+						int totalPages = listSize / pageSize;
+						if ((listSize % pageSize) != 0) {
+							totalPages++;
 						}
-						int page = 0;
+						int displayPage = 0;
 						if (args.length == 1) {
-							page = 1;
+							displayPage = 1;
 						} else {
 							try {
-								int p = Integer.parseInt(args[1]);
-								if ((p >= 1) && (p <= pages)) {
-									page = p;
+								int tempPage = Integer.parseInt(args[1]);
+								if ((tempPage >= 1) && (tempPage <= totalPages)) {
+									displayPage = tempPage;
 								} else {
-									sender.sendMessage(String.format(Messages.INVALID_PAGE, 1, pages));
+									sender.sendMessage(String.format(Messages.INVALID_PAGE, 1, totalPages));
 									return true;
 								}
 							} catch (NumberFormatException e) {
@@ -98,9 +98,9 @@ public class BlacklistCommand implements CommandExecutor {
 								return false;
 							}
 						}
-						int start = (page - 1) * max;
-						int end = (start + max) > (size - 1) ? (size - 1) : (start + max);
-						sender.sendMessage(String.format(Messages.DISPLAYING_PAGE, page, pages));
+						int start = (displayPage - 1) * pageSize;
+						int end = (start + pageSize) > (listSize - 1) ? (listSize - 1) : (start + pageSize);
+						sender.sendMessage(String.format(Messages.DISPLAYING_PAGE, displayPage, totalPages));
 						for (UUID id : list.subList(start, end)) {
 							sender.sendMessage(Bukkit.getOfflinePlayer(id).getName());
 						}
