@@ -73,36 +73,39 @@ public class BlacklistCommand implements CommandExecutor {
 				if (sender.hasPermission("blacklist.list")) {
 					List<UUID> list = plugin.getBlacklistManager().all();
 					int size = list.size();
-					int pages = size / 10;
-					if ((size % 10) != 0) {
-						pages++;
-					}
-					int page = 0;
-
-					if (args.length == 1) {
-						page = 1;
-					} else {
-						try {
-							int p = Integer.parseInt(args[1]);
-							if ((p >= 1) && (p <= pages)) {
-								page = p;
-							} else {
-								sender.sendMessage(String.format(Messages.INVALID_PAGE, 1, pages));
-								return true;
-							}
-						} catch (NumberFormatException e) {
-							sender.sendMessage(String.format(Messages.INVALID_ARGUMENT, args[1]));
-							return false;
+					int max = plugin.getSize();
+					if (size > max) {
+						int pages = size / max;
+						if ((size % max) != 0) {
+							pages++;
 						}
-					}
-
-					int start = (page - 1) * 10;
-					int end = (start + 10) > (size - 1) ? (size - 1) : (start + 10);
-					List<UUID> display = list.subList(start, end);
-
-					sender.sendMessage(String.format(Messages.DISPLAYING_PAGE, page, pages));
-					for (UUID id : display) {
-						sender.sendMessage(Bukkit.getOfflinePlayer(id).getName());
+						int page = 0;
+						if (args.length == 1) {
+							page = 1;
+						} else {
+							try {
+								int p = Integer.parseInt(args[1]);
+								if ((p >= 1) && (p <= pages)) {
+									page = p;
+								} else {
+									sender.sendMessage(String.format(Messages.INVALID_PAGE, 1, pages));
+									return true;
+								}
+							} catch (NumberFormatException e) {
+								sender.sendMessage(String.format(Messages.INVALID_ARGUMENT, args[1]));
+								return false;
+							}
+						}
+						int start = (page - 1) * max;
+						int end = (start + max) > (size - 1) ? (size - 1) : (start + max);
+						sender.sendMessage(String.format(Messages.DISPLAYING_PAGE, page, pages));
+						for (UUID id : list.subList(start, end)) {
+							sender.sendMessage(Bukkit.getOfflinePlayer(id).getName());
+						}
+					} else {
+						for (UUID id : list) {
+							sender.sendMessage(Bukkit.getOfflinePlayer(id).getName());
+						}
 					}
 				} else {
 					sender.sendMessage(Messages.NO_PERM);
