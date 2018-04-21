@@ -13,5 +13,6 @@ public interface Messages {
 	String INVALID_ARGUMENT = "Invalid argument '%s'";
 	String INVALID_PAGE = "Invalid page! Range is %d to %d";
 	String DISPLAYING_PAGE = "Displaying page %d of %d";
+	String BLACKLIST_EMPTY = "The blacklist is currently empty!";
 
 }
