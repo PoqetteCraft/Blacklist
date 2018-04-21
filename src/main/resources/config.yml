@@ -1,0 +1,6 @@
+# ------------------------------------
+#   Configuration file for Blacklist
+# ------------------------------------
+
+# What message should we display to players who are blacklisted?
+disallow-message: "Sorry, you've been blacklisted from this server!"
