@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.pocketkid2</groupId>
 	<artifactId>blacklist</artifactId>
-	<version>0.0.1-ALPHA</version>
+	<version>0.1.0-BETA</version>
 	<name>Blacklist</name>
 	<description>An advanced blacklisting plugin for Minecraft servers</description>
 	<properties>
