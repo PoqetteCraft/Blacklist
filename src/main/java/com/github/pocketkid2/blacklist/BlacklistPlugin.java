@@ -9,6 +9,7 @@ public class BlacklistPlugin extends DatabasePlugin {
 
 	private BlacklistManager manager;
 	private String message;
+	private int size;
 
 	@Override
 	public void onEnable() {
@@ -16,6 +17,7 @@ public class BlacklistPlugin extends DatabasePlugin {
 		message = getConfig().getString("disallow-message");
 		Database.register(this);
 		manager = new BlacklistManager(this);
+		getCommand("blacklist").setExecutor(new BlacklistCommand(this));
 		Bukkit.getPluginManager().registerEvents(new BlacklistListener(this), this);
 		getLogger().info("Done!");
 	}
@@ -31,6 +33,10 @@ public class BlacklistPlugin extends DatabasePlugin {
 
 	public String getMessage() {
 		return message;
+	}
+
+	public int getSize() {
+		return size;
 	}
 
 }

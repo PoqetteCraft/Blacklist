@@ -4,3 +4,6 @@
 
 # What message should we display to players who are blacklisted?
 disallow-message: "Sorry, you've been blacklisted from this server!"
+
+# How many players should we display on one page?
+page-size: 10
